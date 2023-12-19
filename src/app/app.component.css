@@ -1,0 +1,12 @@
+::ng-deep .scrolltop-button {
+    border-radius: 4px !important;
+    width: 30px !important;
+    height: 30px !important;
+}
+::ng-deep .scrolltop-button .symbol-container svg{
+    transform: translateY(20%) !important;
+    width: 100% !important;
+}
+::ng-deep .loader_img{
+    width:90%
+}

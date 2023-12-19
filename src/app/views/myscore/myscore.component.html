@@ -1,0 +1,152 @@
+<div class="contect_bloxk">
+  <div class="clearfix"></div>
+  <div class="gray-bg">
+    <div class="container">
+      <div class="clearfix"></div>
+      <!--<br>-->
+      <div class="row my-score-top">
+        <div class="col-md-11 mr-auto">
+          <div class="row  my-2">
+            <div class="col-md-2 col-6 cate-img"> <span class="text-dark">{{categoryName}} </span> <span><img
+                  class="img-responsive img-rounded" src="{{categoryImage}}" alt="" style="width:40px"></span></div>
+            <div class="col-md-10 col-6"><span class="select-category">
+                <select class="form-control" name="value" [(ngModel)]="value" [ngModelOptions]="{standalone:true}"
+                  (click)="fetchScore(value)">
+                  <option value="">{{'SelectCategory' | translate}}</option>
+                  <option *ngFor="let category of renderArray" value="{{category.id}}">{{category.pageName}}</option>
+
+                </select>
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="row my-score">
+        <div class="col-md-11 mr-auto">
+          <div class="row">
+            <div class="col-md-12 col-xs-12 cat-table">
+              <table datatable width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tbody>
+                  <tr>
+                    <td colspan="6" align="center" valign="middle" class="score-heading"><strong>{{'ScoreHead' |
+                        translate}}</strong></td>
+                  </tr>
+                  <tr *ngIf="scoreRes.statusDescription.statusCode!= 200">
+                    <td height="30"><strong>{{"level" | translate}} 1</strong><br>
+                      <span>{{categoryName}} | 1/3</span>
+                    </td>
+                    <td>&nbsp;</td>
+                    <td>
+                      <form name="form1" method="post" action="">
+                        <label>
+                          <input type="text" name="textfield" [value]="'Score' | translate: 0">
+                        </label>
+                      </form>
+                    </td>
+                    <td><span class="profile-text">{{'Completed' | translate}} 0% </span>
+                      <div class="progress"> </div>
+                    </td>
+                    <td>&nbsp;</td>
+                    <td><button type="button" class="btn btn-success" (click)="PlayGame()">{{'Play' |
+                        translate}}</button></td>
+                  </tr>
+                  <tr *ngFor=" let score of scoreRes.userScoreList ">
+                    <td height="30" *ngIf="scoreRes.statusDescription.statusCode== 200">
+                      <strong>{{score.categoryLevel}}</strong><br>
+                      <span>{{categoryName}} | {{score.questionAnswer}}</span>
+                    </td>
+                    <td class="text-center"> <img *ngIf="score.levelStar==1 || score.levelStar==2 || score.levelStar==3"
+                        class="img-responsive" src="assets/images/star.png" alt="" width="23" height="22">&nbsp;
+                      <img *ngIf="score.levelStar==2 || score.levelStar==3" class="img-responsive"
+                        src="assets/images/star.png" alt="" width="23" height="22">&nbsp;
+                      <img *ngIf="score.levelStar==3" class="img-responsive" src="assets/images/star.png" alt=""
+                        width="23" height="22">&nbsp;
+
+                    </td>
+                    <td>
+                      <form name="form1" method="post" action="">
+                        <label>
+                          <button>{{'Score' | translate}}: {{score.levelScore}} </button>
+                        </label>
+                      </form>
+                    </td>
+                    <td><span class="profile-text">{{'Completed' | translate}} {{score.levelCompletion}}% </span>
+                      <progress-bar progress="{{score.levelCompletion}}" [disable-percentage]="true"
+                        [color]="'#0dfb3a'">
+                      </progress-bar>
+                    </td>
+                    <td *ngIf="Evaluate(score.levelCompletion)">{{'Finished' | translate}}</td>
+                    <td *ngIf="!Evaluate(score.levelCompletion)">&nbsp;</td>
+                    <td *ngIf="!Evaluate(score.levelCompletion)"><button type="button" class="btn btn-success"
+                        (click)="PlayGame()"> {{'Play' | translate}}</button></td>
+                    <td *ngIf="Evaluate(score.levelCompletion)"><button type="button" (click)="Ranking(score)"
+                        data-toggle="modal" data-target="#exampleModal4" class="text-center">{{'Ranking' |
+                        translate}}</button></td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <br>
+    </div>
+  </div>
+</div>
+<jw-modal id="ranking">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <img src="assets/images/close.png"
+            alt="" (click)="closeModal('ranking')">
+          <!--<span aria-hidden="true">&times;</span>-->
+        </button>
+        <h4 class="modal-title" id="exampleModalLabel2"><span><img src="assets/images/popup-img1.png"
+              alt="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><img src="assets/images/logo.png"
+            alt=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="assets/images/popup-img2.png"
+              alt=""></span></h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <h4 class="t2">{{levelmodel}} {{'completedScore' | translate}} = {{levelScore}}</h4>
+            <div class="ranking-wrap">
+              <h3><span class="pull-left"><img src="assets/images/coin-left.png" alt=""></span>{{'Ranking' | translate}}
+                <span class="pull-right"><img src="assets/images/coin-right.png" alt=""></span>
+              </h3>
+              <ul>
+                <li class="row" *ngFor="let list of userList;let  i = index"
+                  [ngClass]="{ 'green-bg':this.userProfileId==list.userProfileId}">
+                  <div class="col-md-5 col-5  "
+                    [ngClass]="{ 'green-bg':this.userProfileId==list.userProfileId,'sky-bg':this.userProfileId != list.userProfileId}">
+                    <span class="text-white">{{i+1}}</span> <span><img src="{{list.imagePathUrl}}" alt=""></span> <span
+                      *ngIf="this.userProfileId!=list.userProfileId">{{list.name}}</span> <span
+                      *ngIf="this.userProfileId==list.userProfileId"><b>Me</b></span>
+                  </div>
+                  <div class="col-md-7 col-7"> <span> <img *ngIf="list.star==1 || list.star==2 || list.star== 3"
+                        src="assets/images/star-sm.png" alt=""> <img *ngIf="list.star==2 ||list.star==3"
+                        src="assets/images/star-sm.png" alt=""> <img *ngIf="list.star==3"
+                        src="assets/images/star-sm.png" alt=""></span> <span>{{'Score' | translate}}:</span> <span
+                      class="float_right">
+                      {{list.score}}</span>
+                  </div>
+                </li>
+
+              </ul>
+            </div>
+          </div>
+          <div class="form-group ">
+            <div class="d-i-b">
+              <button type="button" class=" btn btn-success round_btn" data-dismiss="modal" aria-label="Close"
+                (click)="closeModal('ranking')"> {{'GoBack' | translate}} </button>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</jw-modal>

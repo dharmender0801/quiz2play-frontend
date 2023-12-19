@@ -1,0 +1,46 @@
+<app-header [Navigation]="true"></app-header>
+<div class="search-bar">
+  <div class="container">
+    <form>
+      <label> <i class="fa fa-search"></i> </label>
+      <input type="search" [(ngModel)]="value" onkeydown="return /[a-z]/i.test(event.key)" autocomplete="off"
+        id="input-box" name="searchQuery" placeholder="{{'searcHCat' | translate}}" (keyup)="search(value)" />
+      <label class="close_search cursor"><img (click)="home()" src="assets/images/close.png"> </label>
+    </form>
+  </div>
+</div>
+<section class="single-icon ">
+  <div class="contect_bloxk">
+    <div class="clearfix"></div>
+    <div class="gray-bg">
+      <div class="container">
+        <div class="row" *ngIf="renderArray.length!=0">
+          <div class="col-md-3 col-6" *ngFor="let op of renderArray" (click)="CatagoryRouting(op)">
+            <div class="blk cursor" *ngIf="this.catagoryres?.statusDescription.statusCode ==200"> <a data-toggle="modal"
+                data-target="#exampleModal2" data-whatever="@getbootstrap"><span class="overlay"
+                  *ngIf="isVisible(!op.lockedStatus) "></span> <img class="img-responsive img-rounded"
+                  [defaultImage]="defaultImage" [lazyLoad]="op.mockupPath" alt=""> </a>
+              <div class="below_text" style="
+                    position: absolute;
+                    width: 100%;
+                    bottom: 0;
+                    align-items: center;
+                ">
+                <p><span class="cate-name">{{op.pageName}}</span> <span class="lock lock_1"
+                    *ngIf="isVisible(!op.lockedStatus) "><a class="fa fa-lock"><img src="assets/images/lock.png"
+                        alt=""></a></span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="renderArray.length==0">
+          <div class="center m-5">
+            <p>{{'Noresult' | translate}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+<app-footer></app-footer>

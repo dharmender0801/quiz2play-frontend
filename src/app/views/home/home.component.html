@@ -1,0 +1,22 @@
+<app-header [Navigation]="true"></app-header>
+<app-banner></app-banner>
+<div class="container-fluid">
+  <div class="row">
+    <div class="scrollmenu ">
+      <div class="container">
+        <div [ngClass]="{'arabic_mani':locale=='ar'}">
+          <a class="cursor" (click)="pageresolver('catagories')"><span class="active"
+              [ngClass]="{active:pageloc==''}">{{'Categories' | translate}} </span> </a>
+          <a class="cursor" (click)="pageresolver('myscore')"> <span [ngClass]="{active:pageloc=='myscore'}">{{'Myscore'
+              | translate}}</span></a>
+          <a class="cursor" (click)="pageresolver('help')"><span [ngClass]="{active:pageloc=='help'}">{{'Help' |
+              translate}}</span></a>
+          <!-- <a class="cursor" (click)="pageresolver('buycoin')"><span [ngClass]="{active:pageloc=='buycoin'}">{{'Buycoins'
+              | translate}}</span> </a> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<router-outlet (activate)="onActivate($event)"></router-outlet>
+<app-footer></app-footer>

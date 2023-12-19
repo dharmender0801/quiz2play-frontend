@@ -1,0 +1,62 @@
+.arabic_align{
+  float:left !important;
+
+  /*margin-right: 10px !important;*/
+}
+
+@media(max-width:667px){
+    .cont-left span, .cont-right span {
+        margin:0 !important; 
+        float:none !important;
+        vertical-align: text-bottom;
+    }
+    .cont-left img{
+        width:59% !important;
+        top: -2px !important;
+        left: -8px !important;
+    }
+    /* .cont-right img{
+        width:33% !important;
+        top: -2px !important;
+        left: -5px !important;
+    } */
+    .Staraval{
+        margin-right:11px !important
+    }
+    .cont-right.first.Staraval img {
+        width: 33% !important;
+    }
+    /* .cont-left img{
+        width: 42% !important;
+        top: -2px !important;
+        left: -1px !important;
+        margin-right: 8px;
+    } */
+         .cont-left_ar, .cont-right_ar{
+        padding: 4px;
+    }
+    .cont-left_ar img, .cont-right_ar img{
+        top: -5px !important;
+        left: 13px !important;
+    }
+    /*--https://iq.quiz2play.com/categories/level--*/
+    .main_img_ar{
+        order: 1;
+    }
+    .cat-text_ar{
+        order: 2;
+    }
+        .cont-left_ar.con_left_1,.con_right_1{
+        padding: 2px 9px 4px !important;
+    }
+    .cont-right.con_right_1 img{
+        width: 39% !important;
+    }
+    .cont-left.con_left_1 img,.cont-right.con_right_1 img{
+        top: -4px !important;
+        left: 17px !important;
+    }
+    .cont-left.con_left_1 img{
+        width: 72% !important;
+    }
+}

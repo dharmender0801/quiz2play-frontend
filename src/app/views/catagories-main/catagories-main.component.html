@@ -1,0 +1,113 @@
+<app-header [Navigation]="true"></app-header>
+<div class="container-fluid dark-blue-bg">
+  <div class="container ">
+    <app-bar-comp [Star]="true"></app-bar-comp>
+    <div class="row">
+      <div class="col-md-6 cat-img" [ngClass]="{'main_img_ar':locale== 'ar'}"><img
+          *ngIf="this.levelRes?.statusDescription.statusCode==200" [defaultImage]="defaultImage"
+          [lazyLoad]="this.levelRes?.category.mockupPath" style="width:50%" alt=""></div>
+      <div class="col-md-6 cat-text p-0 lavel-text">
+        <article>
+          <h6 class="text-uppercase"> {{Onlevel.level}} </h6>
+          <ul>
+            <li> {{'Reward' |translate}} <span>: {{Onlevel.rewards}} {{'coins2' | translate}}</span> </li>
+            <li> {{'Category' | translate}} <span>: {{levelRes.category?.pageName }} </span></li>
+            <li>{{'Questions' |translate}} <span>: {{Onlevel.questionPlayedCount}}/{{Onlevel.questionCount}}</span></li>
+            <li>{{'Duration' | translate}} <span>: {{Onlevel.levelTimer}} {{'secondsEach' | translate}}</span></li>
+          </ul>
+          <br>
+          <p class="my_5 text-center">
+            <button _ngcontent-c4="" class="btn font_lato btn-green round_btn" style="background: red;"
+              (click)="Playbutton()">{{'playNow' |translate}} </button>
+            <button _ngcontent-c4="" class="btn font_lato btn-orange round_btn" style="background: red;"
+              (click)="Back()">{{'SwitchCat' |translate}}</button>
+          </p>
+        </article>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid gray-bg">
+  <div class="container cat-text"> <br>
+    <h6 [ngClass]="{'arabic_mani':locale=='ar'}">{{'howtoPlay' | translate}} </h6>
+    <ul style="list-style:inside square;" [ngClass]="{'arabic_mani':locale=='ar'}">
+      <li *ngFor="let op of this.levelRes.guideLineList">{{op.guideline}} </li>
+    </ul>
+  </div>
+</div>
+
+
+<div class="cream-bg level-sec">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h3>{{'levels' | translate}} <a id="episodes_listing" class="float-right cursor" (click)="ShowAll()"
+            *ngIf="!showStatus"><span *ngIf="showAllhide">{{'showAll' |translate}}</span></a><a id="episodes_listing"
+            *ngIf="showStatus" class="pull-right cursor" (click)="ShowLess()">{{'showLess' | translate}}</a></h3>
+      </div>
+    </div>
+    <div class="row" *ngIf="this.levelRes.statusDescription.statusCode==200">
+      <div class="col-md-2 col-6" *ngFor="let op of  renderArray">
+        <div class="blk cursor"> <a class="ancr_blk " data-toggle="modal" data-target="#exampleModal2"
+            data-whatever="@getbootstrap"><span *ngIf="op.levelStatus==0" class="overlay"></span> <img
+              class="img-responsive img-rounded" [defaultImage]="defaultImage" [lazyLoad]="op.imageUrl"
+              (click)="questions(op)" alt=""> </a>
+          <div class="below_text">
+            <div class="lavels"><span class="span_overflow">{{op.level}}</span>
+              <div class="lavels-bottom">
+                <ul [ngClass]="{'unlock':op.star ==3,'onestar':op.star==1 ,'twostar':op.star==2 }">
+                  <li>{{op.questionPlayedCount}}/{{op.questionCount}} <span *ngIf="op.levelStatus==2">|</span> </li>
+                  <li *ngIf="op.levelStatus==2">
+                    <img *ngIf="op.star==1 || op.star==2 || op.star==3 " class="img-responsive"
+                      src="assets/images/star.png" alt="">
+                    <img *ngIf="op.star==2 || op.star==3" class="img-responsive" src="assets/images/star.png" alt="">
+                    <img *ngIf="op.star==3" class="img-responsive" src="assets/images/star.png" alt="">
+                  </li>
+                </ul>
+              </div>
+              <span *ngIf="op.levelStatus==0" class="lock"><a class="fa fa-lock"><img src="assets/images/lock.png"
+                    alt=""></a></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>
+<jw-modal id="nolive">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <img class="cursor"
+            (click)="closeModal('nolive')" src="assets/images/close.png" alt="">
+        </button>
+        <h4 class="modal-title" id="exampleModalLabel2"><span><img src="assets/images/popup-img1.png"
+              alt="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><img src="assets/images/logo.png"
+            alt=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="assets/images/popup-img2.png"
+              alt=""></span></h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <div class="break-heart"><img class="fa-heart" src="assets/images/break-heart.png" alt="">
+            <p class="text-white">{{'noPending' |translate}}</p>
+          </div>
+          <h4 class="t2">{{'nextLive' | translate}}<span id="timer">
+              <countdown #countdown [config]="{ leftTime: 900 , notify: [5,10] }" (finished)="finishLoginTimer()">
+                $!m!:$!s!
+              </countdown>
+            </span> {{'Minutes' |translate}}</h4>
+          <div class="break-heart">
+            <p class="text-white">{{'purchase1' |translate}} {{Onlevel.coins}} {{'coins2' | translate}}</p>
+          </div>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <!-- <button _ngcontent-c4="" class="btn btn-success round_btn" (click)="Buylive()">{{'Buylive' |
+            translate}}</button> -->
+          <button _ngcontent-c4="" class="btn  btn-orange round_btn" (click)="Home()">{{'Home' | translate}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</jw-modal>

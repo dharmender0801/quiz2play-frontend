@@ -1,0 +1,66 @@
+svg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    /* / transform: rotateY(180deg) rotateZ(90deg); / */
+    transform: rotate(-90deg);
+  }
+  
+  svg circle {
+    stroke-dasharray: 113px;
+    stroke-dashoffset: 0px;
+    stroke-linecap: round;
+    stroke-width: 3px;
+    stroke: rgb(14, 251, 59);
+    fill: none;
+    animation: countdown 30s linear forwards;
+  }
+  
+  @keyframes countdown {
+    from {
+      stroke-dashoffset: 0px;
+    }
+    to {
+      stroke-dashoffset: 113px;
+    }
+  }
+  svg circle.red {
+    stroke: #ff0000;
+    
+  }
+  svg circle.initial_state{
+
+    stroke: rgb(14, 251, 59);
+    fill: none;
+    animation: none;
+    /* stroke-dashoffset: 0px;
+     stroke: rgb(14, 251, 59);
+   /* animation-play-state:initial;
+    stroke-dashoffset: initial; */ 
+  }
+  svg circle.orange {
+    stroke: #ffa500;
+  }
+  svg circle.paused {
+    animation-play-state: paused;
+  }
+  svg circle.stopped {
+    stroke-dasharray: 113px;
+    stroke-dashoffset: 0px;
+    stroke-linecap: round;
+    stroke-width: 3px;
+    stroke: rgb(14, 251, 59);
+    fill: none;
+    animation: countdown 30s linear forwards;
+    
+  }
+  svg circle.stop{
+    animation:none
+  }
+
+  svg circle.end{
+    stroke: #ff0000;
+    animation: none;
+  }

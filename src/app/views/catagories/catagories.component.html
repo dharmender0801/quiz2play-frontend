@@ -1,0 +1,24 @@
+<section class="single-icon">
+  <div class="contect_bloxk">
+    <div class="clearfix"></div>
+    <div class="gray-bg">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3 col-6" *ngFor="let op of  this.catagoryres?.categoryList" (click)="CatagoryRouting(op)">
+            <div class="blk cursor" *ngIf="this.catagoryres?.statusDescription.statusCode ==200"> <a data-toggle="modal"
+                data-target="#exampleModal2" data-whatever="@getbootstrap"><span class="overlay"
+                  *ngIf="isVisible(!op.lockedStatus)"></span> <img class="img-responsive img-rounded"
+                  [defaultImage]="defaultImage" [lazyLoad]="op.mockupPath"> </a>
+              <div class="below_text cate-card">
+                <p><span class="cate-name">{{op.pageName}} </span><span class="lock lock_1"
+                    *ngIf="isVisible(!op.lockedStatus) "><a class="fa fa-lock"><img src="assets/images/lock.png"
+                        alt=""></a></span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,12 @@
+ .cursor{
+ cursor:pointer;
+}
+@media(max-width:667px){
+    .footer_bg p {
+        color: #fff;
+        font-size: 13px;
+    }
+    .footer_menu a{
+        font-size: 13px;
+    }
+}

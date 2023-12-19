@@ -1,0 +1,54 @@
+<!-- <div class="row">
+  <div class="col-md-8 col-4  " [ngClass]="{'d-flex':locale=='ar'}">
+    <div class="cont-left" [ngClass]="{'invisible':!d.loggedIn}"><img src="assets/images/heart.png" alt=""><span
+        *ngIf="d.loggedIn">{{this.d.lives}}</span></div>
+  </div>
+  <div class="col-md-4 col-8">
+    <div class="cont-right second ml-3" *ngIf='Star'
+      [ngClass]="{'invisible':!d.loggedIn ,'arabic_align':locale=='ar'} "><img src="assets/images/star.png" class="star"
+        alt=""><span *ngIf="d.loggedIn">0 </span></div>
+    <div class="cont-right first" [ngClass]="{'invisible':!d.loggedIn, 'Staraval':Star ,'arabic_align':locale=='ar'}">
+      <img src="assets/images/coin.png" alt=""><span class="mr-2" *ngIf="d.loggedIn">{{this.d.coins}}</span></div>
+  </div>
+
+</div> -->
+
+
+
+<div class="row">
+  <div class="col-md-8 col-4  " [ngClass]="{'d-flex':locale=='ar'}">
+    <div class="cont-left con_left_1 " [ngClass]="{'invisible':!d.loggedIn,'cont-left_ar':locale === 'ar'}"><img
+        src="assets/images/heart.png" alt=""><span *ngIf="d.loggedIn">{{this.d.lives}}</span></div>
+  </div>
+  <div class="col-md-4 col-8">
+    <div class="cont-right con_right_1 second ml-3" *ngIf='Star'
+      [ngClass]="{'invisible':!d.loggedIn ,'arabic_align':locale=='ar','cont-right_ar':locale === 'ar'} "><img
+        src="assets/images/star.png" class="star" alt=""><span *ngIf="d.loggedIn">0 </span></div>
+    <div class="cont-right first" [ngClass]="{'invisible':!d.loggedIn, 'Staraval':Star ,'arabic_align':locale=='ar'}">
+      <img src="assets/images/coin.png" alt=""><span class="mr-2" *ngIf="d.loggedIn">{{this.d.coins}}</span>
+    </div>
+  </div>
+
+
+
+
+
+
+
+  <!--heart-->
+  <!-- <div _ngcontent-sbq-c29="" class="cont-left con_left_1 cont-left_ar">
+    <img _ngcontent-sbq-c29="" src="assets/images/heart.png" alt="" style="margin: 0 !important;">
+    <span _ngcontent-sbq-c29="" class="ng-star-inserted">3</span>
+
+  </div>
+
+  <div _ngcontent-sbq-c29="" class="cont-right con_right_1 first arabic_align" style="padding: 2px 9px 4px;">
+    <img _ngcontent-sbq-c29="" src="assets/images/coin.png" alt="">
+    <span _ngcontent-sbq-c29="" class="mr-2 ng-star-inserted">150</span>
+   
+  </div> -->
+  <!--x-coin-x-->
+  <!-- <div class="col-md-2 col-4 second" *ngIf='Star'>
+      <div class="cont-right"  ><img src="assets/images/star.png" class="star" alt=""><span>0</span></div>
+    </div> -->
+</div>

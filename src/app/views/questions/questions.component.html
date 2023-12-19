@@ -1,0 +1,373 @@
+<app-header [Navigation]="false"></app-header>
+<div class="container-fluid dark-blue-bg">
+  <div class="container pd-none">
+    <app-bar-comp Star="true"></app-bar-comp>
+  </div>
+  <div class="container" *ngIf="this.quesAnsRes?.statusDescription.statusCode ==200 ">
+    <div class="row">
+      <div class="col-md-7 cat-img">
+        <!------>
+        <div class="wrapper ">
+          <h3>{{this.level?.level}}</h3>
+          <div id="formContent">
+            <!-- Tabs Titles -->
+            <!-- Icon -->
+            <div class="fadeIn first">
+              <h5> {{this.level?.categoryName}} | {{i+1}}/{{this.level.questionCount}}</h5>
+            </div>
+            <!-- Remind Passowrd -->
+            <div id="formFooter">
+              <!-- <br>
+              <br> -->
+              <span class="underlineHover" *ngIf="quesStatus == 1">
+                {{'goodGoing' | translate}} <img src="assets/images/clap.gif" style="    width: 100px;"
+                  class="mt-3 m-auto d-block" /><br>
+                {{'rightAnswerText' | translate}} </span>
+              <span class="underlineHover" *ngIf="quesStatus == 0 ">
+                {{'wrongAnswerText' | translate}} <img src="assets/images/wrong.gif" class="mt-3 m-auto d-block" /><br>
+                {{'KeepGoing' | translate}}</span>
+              <span class="underlineHover ques_text mt-5 d-block" *ngIf="quesStatus==3">{{this.question?.question}}
+              </span>
+            </div>
+          </div>
+        </div>
+        <!------>
+      </div>
+      <div class="col-md-5 cat-text">
+        <div class="break-heart " *ngIf="quesStatus == 1 ">&nbsp; </div>
+        <div class="break-heart" *ngIf="quesStatus == 0 "><img class="fa-heart" src="assets/images/break-heart.png"
+            alt="">
+          <p class="text-white">{{'live1lost' | translate}}</p>
+        </div>
+        <div class="col-md-10  mr-auto">
+
+          <article>
+            <div class="clearfix"></div>
+            <br>
+            <div class="center d_flex my_2">
+              <p class="select_answer ">{{'SelectAnswer' | translate}}</p>
+              <div class="base_timer">
+                <div id="countdown">
+                  <!-- <div id="countdown-number">0:{{countDown}}</div> -->
+                  <div id="countdown-number" class="font-weight-bold text-success"
+                    [ngClass]="{'text-danger': this.timerColor ==2,'text-warning':timerColor==1,'text-success':timerColor==0}"
+                    *ngIf="!timerHide">
+                    <countdown #countdown [config]="{ leftTime:this.level.levelTimer , notify: [5,10] }"
+                      (notify)="onNotify($event)" (event)="handleEvent($event)" (finished)="finishLoginTimer()">0: $!s!
+                    </countdown>
+                  </div>
+                  <div id="countdown-number" class="text-danger"
+                    [ngClass]="{'text-danger': this.timerColor ==2,'text-success':timerColor==0}" *ngIf="timerHide"> 0:
+                    {{this.level.levelTimer}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <ul>
+              <li>
+                <button
+                  [ngClass]="{' btn-outline-light ': question?.option1 !=userValue , 'ques-active':quesStatus && this.optiontype == 'option1' ,'ques-inactive':!quesStatus && this.optiontype == 'option1' }"
+                  type="button" class="btn  ques_text btn-outline-light col-md-12 col-12 text-white"
+                  (click)="QuesAnsCheck(this.question?.option1,'option1')">{{this.question?.option1}}</button>
+              </li>
+              <li>
+                <button
+                  [ngClass]="{'btn-outline-light': this.question?.option2 != this.userValue ,'ques-active': quesStatus && this.optiontype == 'option2' ,'ques-inactive':!quesStatus && this.optiontype == 'option2'}"
+                  type="button" class="btn  ques_text btn-outline-light col-md-12 col-12 text-white"
+                  (click)="QuesAnsCheck(this.question.option2,'option2' )">{{this.question?.option2}}</button>
+              </li>
+              <li>
+                <button
+                  [ngClass]="{'btn-outline-light':this.question?.option3 != this.userValue , 'ques-active':quesStatus && this.optiontype == 'option3' ,'ques-inactive':!quesStatus && this.optiontype == 'option3' }"
+                  type="button" class="btn  ques_text btn-outline-light col-md-12 col-12 text-white"
+                  (click)="QuesAnsCheck(this.question?.option3,'option3')">{{this.question?.option3}}</button>
+              </li>
+              <li>
+                <button type="button"
+                  [ngClass]="{'btn-outline-light':this.question?.option4 != this.userValue , 'ques-active':quesStatus && this.optiontype == 'option4' ,'ques-inactive': !quesStatus && this.optiontype == 'option4'}"
+                  class="btn  ques_text btn-outline-light col-md-12 col-12 text-white"
+                  (click)="QuesAnsCheck(this.question?.option4,'option4')">{{this.question?.option4}}</button>
+              </li>
+              <li class="text-center mrgn_btn">
+                <button class="btn font_lato btn-green round_btn" style="background: red;" (click)="ReRoll()"
+                  *ngIf=" this.quesStatus == 0 ">{{'reroll' | translate}}</button>
+                <button class="btn font_lato btn-orange round_btn" style="background: red;" (click)=" Back()"
+                  *ngIf=" this.quesStatus == 0 ">{{'SwitchCat' | translate}}</button>
+              </li>
+              <li *ngIf=" this.quesStatus == 1" class="text-center mrgn_btn">
+                <button class="btn font_lato btn-green round_btn play" style="background: red;"
+                  (click)="NextQues()">{{'PlButton' | translate}} </button>
+
+              </li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+
+</div>
+<div class="container-fluid gray-bg" *ngIf="triviaShow  == 1">
+  <div class="container cat-text"> <br>
+    <h6>{{'CorrectAnswer' | translate}}: {{this.question.correctAnswer}}</h6>
+    <p><b>{{'Trivia' | translate}}</b>: {{this.question.trivia}} </p>
+  </div>
+</div>
+<app-footer></app-footer>
+<!-- Time Up -->
+<jw-modal id="livepopup">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="CloseTimerEnd()">
+          <img src="assets/images/close.png" alt="">
+
+        </button>
+        <h4 class="modal-title" id="exampleModalLabel2"><span><img src="assets/images/popup-img1.png"
+              alt="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><img class="quitz_to_play"
+            src="assets/images/logo.png" alt=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img
+              src="assets/images/popup-img2.png" alt=""></span></h4>
+      </div>
+      <div class="modal-body">
+        <!-- <form> -->
+        <div class="form-group">
+          <h3 class="t1">{{'TimeUp' | translate}} </h3>
+          <div class="break-heart"><img class="fa-heart" src="assets/images/break-heart.png" alt="">
+            <p class="text-white">{{'live1lost' | translate}}</p>
+          </div>
+          <!---->
+          <h4 class="t2">{{'answerAll' | translate}}{{level?.levelTimer}}<br>
+            {{'secondstowin' | translate}}</h4>
+        </div>
+        <div class="modal-footer justify-content-center" *ngIf="data.lives!=0">
+          <button type="button" class="btn btn-success round_btn" (click)="CloseTimerEnd()">Start Quiz Again</button>
+          <button type="button" class="btn font_lato btn-warning round-btn" style="background: orange;"
+            (click)="Back()">{{'SwitchCat'| translate}}</button>
+        </div>
+        <div class="modal-footer justify-content-center" *ngIf="data.lives==0">
+          <!-- <button type="button" class="btn btn-success round_btn" (click)="Buylive()">{{'Buylive' | translate}}</button> -->
+          <button type="button" class="btn font_lato btn-orange round_btn" style="background: red;"
+            (click)="Back()">{{'Home' | translate}}</button>
+        </div>
+        <!-- </form> -->
+      </div>
+    </div>
+  </div>
+</jw-modal>
+
+
+<jw-modal id="nextLevel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel2"><span><img src="assets/images/popup-img1.png"
+              alt="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><img class="quitz_to_play"
+            src="assets/images/logo.png" alt=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img
+              src="assets/images/popup-img2.png" alt=""></span></h4>
+      </div>
+      <div class="modal-body">
+        <!-- <form> -->
+        <div class="form-group">
+          <h3 class="t1">{{'header.congo' | translate}} </h3>
+          <h4> {{level?.categoryName}} {{level?.level}} {{'Completed' | translate}}</h4>
+          <div><img src="assets/images/star-award.png" alt=""><br>
+            <p class="text-white">{{'youWon' | translate}}: {{level?.rewards}} {{'header.coins' | translate}} </p>
+            <p class="text-white">{{'Rating' | translate}} : <img *ngIf="star==1 ||star==2 || star== 3"
+                src="assets/images/star-sm.png" alt=""> <img *ngIf="star==2 ||star==3" src="assets/images/star-sm.png"
+                alt=""> <img *ngIf="star==3" src="assets/images/star-sm.png" alt=""></p>
+          </div>
+          <!---->
+          <h4 class="t2">{{'keepGoing' | translate}}
+          </h4>
+          <h4 class="t2">{{'playBoosterlevel' | translate}}</h4>
+
+        </div>
+        <div class="modal-footer justify-content-center text-center">
+          <button type="button" class="btn btn-success round_btn" (click)="ScoreCheck()">{{'CheckScore' |
+            translate}}</button>
+          <button type="button" class="btn font_lato btn-warning round_btn play"
+            (click)="playNextLevel()">{{'playNextLevel' |translate}}</button>
+        </div>
+        <!-- </form> -->
+      </div>
+
+    </div>
+  </div>
+</jw-modal>
+<jw-modal id="nextCategory">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel2"><span><img src="assets/images/popup-img1.png"
+              alt="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><img class="quitz_to_play"
+            src="assets/images/logo.png" alt=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img
+              src="assets/images/popup-img2.png" alt=""></span></h4>
+      </div>
+      <div class="modal-body">
+        <!-- <form> -->
+        <div class="form-group">
+          <h3 class="t1">{{"header.congo" | translate}}</h3>
+          <h4>{{level?.level}} {{'Completed'}}</h4>
+          <div><img src="assets/images/star-award.png" alt=""><br>
+            <p class="text-white">{{'youWon' | translate}} : {{level?.rewards}} {{'coins2' |translate}} </p>
+            <p class="text-white">{{'Rating' | translate}} : <img *ngIf="star==1 ||star==2 || star== 3"
+                src="assets/images/star-sm.png" alt=""> <img *ngIf="star==2 ||star==3" src="assets/images/star-sm.png"
+                alt=""> <img *ngIf="star==3" src="assets/images/star-sm.png" alt=""></p>
+          </div>
+          <!---->
+          <h4 class="t2">{{'playBoosterlevel' | translate}}</h4>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn btn-success round_btn" (click)="ScoreCheck()">{{'CheckScore'
+            |translate}}</button>
+          <button class="btn font_lato btn-warning round_btn play" id="nextCat-button"
+            (click)="NextCategory()">{{'palyNextCat' | translate}}</button>
+        </div>
+        <!-- </form> -->
+      </div>
+
+    </div>
+  </div>
+</jw-modal>
+
+<jw-modal id="boostermodal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content"> <span class="flag-top"><img class="flag" src="assets/images/flag1.png" alt=""></span>
+      <div class="modal-header">
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <img src="assets/images/close.png" alt=""> -->
+        <!--<span aria-hidden="true">&times;</span>-->
+        <!-- </button> -->
+        <h4 class="modal-title" id="exampleModalLabel2"><span><img src="assets/images/popup-img1.png"
+              alt="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><img class="quitz_to_play"
+            src="assets/images/logo.png" alt=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img
+              src="assets/images/win.png" alt=""></span></h4>
+      </div>
+      <div class="modal-body booster-wrap">
+
+        <h3 class="t1"><img src="assets/images/star-award-sm.png" alt=""> {{'header.congo' | translate}}</h3>
+        <h4 class="t3">{{level?.level}} {{'Completed' |translate}}</h4>
+        <div class="break-heart booster">
+          <p class="text-white star-sm">{{'Rating' |translate}} : <img *ngIf="star==1 ||star==2 || star== 3"
+              src="assets/images/star-sm.png" class="star_1" alt=""> <img *ngIf="star==2 ||star==3"
+              src="assets/images/star-sm.png" class="star_1" alt=""> <img *ngIf="star==3"
+              src="assets/images/star-sm.png" class="star_1" alt=""></p>
+          <p class="mystery"><img class="mysteryImg" src="assets/images/mystery-chest.png" alt=""></p>
+          <p class="green"><img src="assets/images/booster-sm.png" class="booster-sm" alt="">{{'MysteryChest' |
+            translate}} </p>
+          <p>{{'youWon' | translate}} : {{level?.rewards}} {{'coins2' | translate}}</p>
+
+        </div>
+        <!---->
+        <!-- <div class="text-center">
+            <img src="assets/images/50-50.png" alt="">
+          </div> -->
+        <div class=" modal-footer justify-content-center">
+          <button type="button" class="btn btn-success round_btn" (click)="ScoreCheck()">{{'CheckScore' |
+            translate}}</button>
+          <button type="button" class="btn font_lato btn-warning round_btn play"
+            (click)="playNextLevel()">{{'playNextLevel' | translate}}</button>
+        </div>
+      </div>
+      <span class="flag-bottom"><img class="flag" src="assets/images/flag2.png" alt=""></span>
+    </div>
+  </div>
+</jw-modal>
+<jw-modal id="rank">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <!-- <img src="assets/images/close.png" alt="" (click)="closeModal('rank')"> -->
+          <!--<span aria-hidden="true">&times;</span>-->
+        </button>
+        <h4 class="modal-title" id="exampleModalLabel2"><span><img src="assets/images/popup-img1.png"
+              alt="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><img src="assets/images/logo.png"
+            class="quitz_to_play" alt=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img
+              src="assets/images/popup-img2.png" alt=""></span></h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <h3 class="t1">{{'header.congo' | translate}}{{Name}}!! </h3>
+            <h4 class="t2">{{levelmodel}} {{'completedScore' | translate}} = {{userScore}}</h4>
+            <div class="ranking-wrap">
+              <h3><span class="pull-left"><img src="assets/images/coin-left.png" alt=""></span>{{'Ranking' | translate}}
+                <span class="pull-right"><img src="assets/images/coin-right.png" alt=""></span>
+              </h3>
+              <ul>
+                <li class="row" *ngFor="let list of rankingres.rankingUserList;let  i = index"
+                  [ngClass]="{ 'green-bg':this.userProfileId==list.userProfileId}">
+                  <div class="col-md-5 col-5  "
+                    [ngClass]="{ 'green-bg':this.userProfileId==list.userProfileId,'sky-bg':this.userProfileId != list.userProfileId}">
+                    <span class="text-white">{{i+1}}</span> <span><img src="{{list.imagePathUrl}}" alt=""></span> <span
+                      *ngIf=":this.userProfileId!=list.userProfileId">{{list.name}}</span> <span
+                      *ngIf=":this.userProfileId==list.userProfileId">Me</span>
+                  </div>
+                  <div class="col-md-7 col-7"> <span> <img *ngIf="list.star==1 || list.star==2 || list.star== 3"
+                        src="assets/images/star-sm.png" alt=""> <img *ngIf="list.star==2 ||list.star==3"
+                        src="assets/images/star-sm.png" alt=""> <img *ngIf="list.star==3"
+                        src="assets/images/star-sm.png" alt=""></span> <span>{{'Score' | translate}}:</span> <span>
+                      {{list.score}}</span> </div>
+                </li>
+
+              </ul>
+            </div>
+          </div>
+
+          <div class="modal-footer justify-content-center ">
+            <div class="d-i-b">
+
+              <button type="button" class=" btn btn-success round_btn" data-dismiss="modal" aria-label="Close"
+                (click)="playNextLevel()">{{'playNextLevel' | translate}}</button>
+              <button type="button" class="btn btn-warning round_btn" data-dismiss="modal"
+                (click)="editModel()">{{'editProfile' | translate }} </button>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div (click)="homebutton()" class="cursor"><a><u>{{'homePage' |translate}}</u> </a></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</jw-modal>
+<jw-modal id="nolive" *ngIf="data.lives==0">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <img class="cursor"
+            (click)="closeNolive()" src="assets/images/close.png" alt="">
+          <!--<span aria-hidden="true">&times;</span>-->
+        </button>
+        <h4 class="modal-title" id="exampleModalLabel2"><span><img src="assets/images/popup-img1.png"
+              alt="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><img class="quitz_to_play"
+            src="assets/images/logo.png" alt=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img
+              src="assets/images/popup-img2.png" alt=""></span></h4>
+      </div>
+      <div class="modal-body">
+        <!-- <form> -->
+        <div class="form-group">
+          <!-- <h3 class="t1">Oops No Live!!</h3> -->
+          <div class="break-heart"><img class="fa-heart" src="assets/images/break-heart.png" alt="">
+            <p class="text-white">{{'noPending' | translate}}</p>
+          </div>
+          <!---->
+          <h4 class="t2">{{'nextLive' |translate}}<span class="arabic_time" id="timer">
+              <countdown #countdown [config]="{ leftTime: 900 }" (finished)="finishLoginTimer()"> $!m!:$!s!
+              </countdown>
+            </span> {{'Minutes' |translate}}</h4>
+          <div class="break-heart">
+            <p class="text-white">{{'purchase1' |translate}} {{levelCoins}} {{'coins2' | translate}}
+            </p>
+          </div>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn btn-success round_btn" (click)="Buylive()">{{'Buylive' | translate}}</button>
+          <button type="button" class="btn font_lato btn-orange round_btn" style="background: red;"
+            (click)="Home()">{{'Home' |translate}}</button>
+        </div>
+        <!-- </form> -->
+      </div>
+    </div>
+  </div>
+</jw-modal>

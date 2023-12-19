@@ -1,0 +1,97 @@
+<app-header [Navigation]="false"></app-header>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 bg_color">
+            <div class="close_btn">
+                <img src="assets/images/close.png" (click)="home()" alt="close">
+            </div>
+            <div class="cat_description" *ngIf="languageswitch() == 1">
+                <p>Welcome to Quiz2play, an exciting trivia quiz game subscription
+                    service for trivia addicts and quiz heads! Quiz2play starts as an easy game with Free Lives,
+                    Coins
+                    and
+                    Free Trivia against each wrong or right answer and gets harder as you level up! It offers access
+                    to
+                    different quiz categories of content such as World, Animal, GK, History, Geography, Cricket
+                    Science,
+                    Current Affairs, English, Physics, Chemistry, Biology, Computer, Celebrity, Sports, and
+                    Astronomy.
+                </p>
+                <p>By accessing or using our GSM and Mobile App/Portal, the "User" signify that he/she has read, and
+                    understands and agrees to be bound by these Terms of Use ("Terms of Use" or "Agreement"),
+                    whether or
+                    not
+                    user is a registered member of Quiz2play. We reserve the right, at our sole discretion, to
+                    change,
+                    modify, add, or delete portions of these Terms of Use at any time without further notice. If we
+                    do
+                    this,
+                    we will post the changes to these Terms of Use on this page and will indicate at the top of this
+                    page
+                    the date these terms were last revised. Your continued use of the Service after any such changes
+                    constitutes your acceptance of the new Terms of Use. If you do not agree to abide by these, or
+                    any
+                    future Terms of Use, do not use or access (or continue to use or access) the Service. It is your
+                    responsibility to regularly check the terms and conditions to determine if there have been
+                    changes
+                    to
+                    these Terms of Use and to review such changes.</p>
+                <p class="my-2">PLEASE READ THESE TERMS OF USE CAREFULLY AS THEY CONTAIN
+                    IMPORTANT INFORMATION REGARDING YOUR LEGAL RIGHTS, REMEDIES AND OBLIGATIONS</p>
+                <p><span class="font-weight-bold">Eligibility:</span>This Service is intended solely for users who
+                    are
+                    twelve (12) years of age or older. Any registration by, use of or access to the Service by
+                    anyone
+                    under
+                    12 is unauthorized, unlicensed and in violation of these Terms of Use. By using the Service, you
+                    represent and warrant that you are 12 or older, and that you agree to and to abide by all of the
+                    terms
+                    and conditions of this Agreement.</p>
+                <p><span class="font-weight-bold">Copyright Complaints: </span>We respect the intellectual property
+                    rights
+                    of others and we prohibit users from uploading, posting or otherwise transmitting on the service
+                    any
+                    materials that violate another party's intellectual property rights. When we receive proper
+                    Notification
+                    of Alleged Copyright Infringement, we promptly remove or disable access to the allegedly
+                    infringing
+                    material and terminate the accounts of repeat infringers. If you believe that any material on
+                    the
+                    Service infringes upon any copyright which you own or control, you may send a written
+                    notification
+                    of
+                    such infringement to our designated office location</p>
+            </div>
+            <div class="cat_description" *ngIf="languageswitch() == 2">
+                <p>مرحبًا بك في Quiz2play ، خدمة الاشتراك في لعبة مسابقة الأسئلة الممتعة و الشيقة! تبدأ Quiz2play كلعبة
+                    سهلة مع ارواح و كوينز ومعلومات عن الاجابات مقابل كل إجابة خاطئة أو صحيحة وتزداد صعوبة كلما تقدمت في
+                    المستوى! يوفر الوصول إلى فئات اختبار مختلفة من المحتوى مثل العالم ، الحيوان ، معلومات عامة ، التاريخ
+                    ، الجغرافيا ، علوم الكريكيت ، اخبار ، اللغة الإنجليزية ، الفيزياء ، الكيمياء ، الأحياء ، الكمبيوتر ،
+                    المشاهير ، الرياضة ، وعلم الفلك.
+                </p>
+                <p>من خلال الوصول إلى أو استخدام النظام الشامل للاتصالات و تطبيق الموبايل ، يشير ""المستخدم"" إلى أنه قد
+                    قرأ وفهم ووافق على الالتزام بشروط الاستخدام هذه (""شروط الاستخدام"" أو ""الاتفاقية"") ، سواء كان
+                    المستخدم أم لا عضو مسجل في فنتاستك نحتفظ بالحق ، وفقًا لتقديرنا الخاص ، في تغيير أو تعديل أو إضافة
+                    أو حذف أجزاء من شروط الاستخدام هذه في أي وقت دون إشعار آخر. إذا قمنا بذلك ، سنقوم بنشر التغييرات على
+                    شروط الاستخدام هذه على هذه الصفحة وسنشير في الجزء العلوي من هذه الصفحة إلى تاريخ آخر تعديل لهذه
+                    الشروط. يمثل استمرار استخدامك للخدمة بعد أي تغييرات من هذا القبيل موافقتك على شروط الاستخدام
+                    الجديدة. إذا كنت لا توافق على الالتزام بشروط الاستخدام هذه أو أي شروط مستقبلية ، فلا تستخدم أو تصل
+                    إلى (أو تستمر في استخدام أو الوصول إلى) الخدمة. تقع على عاتقك مسؤولية التحقق بانتظام من الشروط
+                    والأحكام لتحديد ما إذا كانت هناك تغييرات في شروط الاستخدام هذه ومراجعة هذه التغييرات</p>
+                <p class="my-2">يرجى قراءة شروط الاستخدام هذه بعناية لأنها تحتوي على معلومات مهمة فيما يتعلق بحقوقك
+                    القانونية والالتزامات</p>
+                <p><span class="font-weight-bold">مناسب للاختيار</span>هذه الخدمة مخصصة فقط للمستخدمين الذين يبلغون من
+                    العمر 12 عامًا أو أكبر. أي تسجيل بواسطة الخدمة أو استخدامها أو الوصول إليها من قبل أي شخص يقل عمره
+                    عن 12 عامًا غير مصرح به ، وغير مرخص به ، وينتهك شروط الاستخدام هذه. باستخدام الخدمة ، أنت تقر وتتعهد
+                    بأنك تبلغ من العمر 12 عامًا أو أكبر وأنك توافق على جميع بنود وشروط هذه الاتفاقية وتلتزم بها.</p>
+                <p><span class="font-weight-bold">شكاوى حقوق النشر و الطبع </span>نحن نحترم حقوق الملكية الفكرية للآخرين
+                    ونحظر على المستخدمين تحميل أي مواد تنتهك حقوق الملكية الفكرية لطرف آخر أو نشرها أو نقلها بطريقة
+                    أخرى. عندما نتلقى إخطارًا صحيحًا بانتهاك حقوق الطبع والنشر ، نقوم على الفور بإزالة أو تعطيل الوصول
+                    إلى المواد المخالفة المزعومة وإنهاء حسابات منتهكي التكرار. إذا كنت تعتقد أن أي مادة على الخدمة تنتهك
+                    أي حقوق نشر تملكها أو تتحكم فيها ، يمكنك إرسال إشعار كتابي بهذا التعدي إلى موقع المكتب لدينا."</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

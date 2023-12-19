@@ -1,0 +1,58 @@
+<div class="contect_bloxk">
+  <div class="clearfix"></div>
+  <div class="gray-bg ">
+    <div class="container">
+      <h4>{{'saleShow' |translate}}</h4>
+      <div class="center">
+        <h6 class="text-center">{{'wishtoBuy' | translate}}</h6>
+      </div>
+      <div id="formCont">
+        <div class="row" *ngIf="this.buyCoinlist?.statusDescription.statusCode ==200">
+          <div class="col-md-3" *ngFor="let list of this.buyCoinlist?.buyCoinPackList">
+            <div class="buy-coins-box cursor" (click)="getcoins(list)"> <span class="sale"><img src="{{list.imageUrl2}}"
+                  alt=""></span>
+              <div class="coin-content imageClass">
+                <p><span><img src="{{list.imageUrl1}}" alt=""></span></p>
+                <p><span class="text-white">{{list.packName}}</span></p>
+                <p>
+                  <button type="button" class="btn btn-success">{{list.price}} {{list.currency}}</button>
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<jw-modal id="buycoins">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="closeModal('buycoins')">
+          <img class="cursor" src="assets/images/close.png" alt="">
+        </button>
+        <h4 class="modal-title" id="exampleModalLabel2"><span><img src="assets/images/popup-img1.png"
+              alt="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><img class="quitz_to_play"
+            src="assets/images/logo.png" alt=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img
+              src="assets/images/popup-img2.png" alt=""></span></h4>
+
+      </div>
+      <div class="modal-body">
+        <div class="form-group py-2">
+          <!-- <h3 class="t1">THE ULTIMATE QUIZ!!</h3> -->
+          <h4 class=" mo_heading mb-5 ">{{'ConfirmCoin' | translate }}{{this.selected.packName}} {{'at' | translate}}
+            {{this.selected.price}} {{this.selected.currency}}</h4>
+        </div>
+      </div>
+      <div class="modal-footer pb-0 border-0 footer-center">
+        <button type="submit" class="btn btn-success round_btn" (click)="buycoin()"> {{'Buycoins' | translate}}
+        </button>
+        <button type="button" class="btn btn-warning round_btn" (click)="close()"> {{'Cancel' | translate}} </button>
+
+      </div>
+
+    </div>
+  </div>
+</jw-modal>

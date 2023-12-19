@@ -1,0 +1,72 @@
+::ng-deep .ng-image-slider .ng-image-slider-container .main .main-inner .img-div .caption {
+    margin: auto;
+    width: 22% !important;
+    top: 0;
+    /* z-index: 999999999; */
+    white-space: normal;
+    left: 0;
+    right: 0;
+    font-size: 30px;
+}
+.container-fluid .container{
+    overflow: hidden;
+    }
+    
+    ::ng-deep  .owl-theme .owl-nav.disabled+.owl-dots{
+    display:none;
+    }
+    
+    ::ng-deep .owl-carousel .owl-stage-outer {
+        position: relative;
+        overflow: visible !important;
+        --webkit-transform: translateZ(0);
+    }
+    ::ng-deep .owl-carousel .owl-item img {
+        display: block;
+        width: auto;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: auto;
+    }
+   ::ng-deep  .owl-carousel .owl-item {
+        min-height: 250px;
+        float: left;
+        --webkit-backface-visibility: hidden;
+        --webkit-touch-callout: none;
+    }
+    div.scrollmenu {
+        background-color: #1a1e2a;
+        overflow: auto;
+        white-space: nowrap;
+        margin: 0 !important;
+        position: relative;
+        bottom: 0;
+        z-index: 9;
+        width: 100%;
+      }
+      
+.play-btn {
+    top: -80px;
+    position: relative;
+    z-index: 999;
+  }
+  .h294{
+    max-height: 294px;
+    }
+           .direction{
+        direction: ltr;
+    } 
+    @media(max-width:667px){
+        .play-btn a{
+            display:block;
+        }
+        .play-btn img{
+            width:130px;
+        }
+               .direction{
+        direction: ltr;
+    } 
+    }
+    
+    

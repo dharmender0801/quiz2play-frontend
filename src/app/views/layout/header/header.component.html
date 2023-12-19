@@ -1,0 +1,462 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top">
+  <div class="container"> <a class="navbar-brand" (click)="Navigate()"><img class="img-responsive cursor quitz_to_play"
+        src="assets/images/logo.png" alt=""></a>
+    <button class="navbar-toggler collapsed" (click)="showNav()" type="button" data-toggle="collapse"
+      data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="true" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span> </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse" [ngClass]="{'show':showNavbar==true}">
+      <ul class="navbar-nav navbar_nav mr-auto" *ngIf="!showNavbar">
+        <li style="list-style-type:none;">&nbsp;</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right marg_top">
+        <li class="sub_btn" *ngIf=" !this.dataShare.loggedIn ">
+          <button type="button" class="btn btn-success " data-toggle="modal" data-target="#exampleModal2"
+            data-whatever="@getbootstrap" (click)="subsmodal()"> {{'header.Subscription' | translate}} </button>
+        </li>
+        <li *ngIf="!this.dataShare.loggedIn "><a class="text-white cursor" data-toggle="modal"
+            data-target="#exampleModal3" (click)=" loginModal() ">{{'header.login' | translate}}</a></li>
+        <li *ngIf="dataShare.loggedIn" class="li_user cursor"><img class="img-responsive" src="{{profile.profileImage}}"
+            alt="">
+          {{ this.profile.name }}
+          <ul [ngClass]="{'arabic_align':locale== 'ar'}">
+            <li><a class="cursor" (click)="profileModal()"><i class="fa fa-file"></i>{{'header.profileUpdate' |
+                translate}}</a></li>
+            <li><a class="cursor" (click)="openModal('unsub')"><i class="fa fa-edit"></i>{{'header.unsub' |
+                translate}}</a></li>
+            <li><a class="cursor" (click)="openModal('logout')"><i class="fa fa-sign-out"></i>{{'Logout' |
+                translate}}</a></li>
+          </ul>
+        </li>
+        <li><a *ngIf="!showNavbar">|</a></li>
+        <li *ngIf="!langhide" class=" li_user cursor lang_color "> <a class=" text-white"
+            aria-expanded="true"><span>{{language}} <img id="arrow" src="assets/images/arrow-down.png" class="arrow_img"
+                style="width:17%"></span>
+            <span class="caret"></span> </a>
+          <ul>
+            <li><a class="cursor" *ngFor=" let lang of langRes.languageList"
+                (click)="refresh(lang.langShortCode)">{{lang.lang}}</a></li>
+          </ul>
+        </li>
+        <!-- <li class="search_end" *ngIf="!searchHide"><a class="cursor"><img (click)="search()"
+              src="assets/images/search_ico.png" width="30" height="31" alt=""></a></li> -->
+      </ul>
+
+    </div>
+  </div>
+</nav>
+<!-- Subscription Modal -->
+<jw-modal id="subsid" *ngIf="loginResponse.statusDescription.statusCode!=200">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close">
+          <img class="cursor" (click)="close()" src="assets/images/close.png" alt=""></button>
+        <h4 class="modal-title" id="exampleModalLabel2"><span><img src="assets/images/popup-img1.png"
+              alt="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><img src="assets/images/logo.png"
+            class="quitz_to_play" alt=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img
+              src="assets/images/popup-img2.png" alt=""></span></h4>
+      </div>
+      <div class="modal-body">
+        <form #registerForm="ngForm" (ngSubmit)="register(registerForm)" *ngIf="otpbool==0">
+          <div class="form-group">
+            <h3 class="t1">{{'header.ultimate' | translate }}</h3>
+            <h4 class="t2">{{'unlockText' | translate}}</h4>
+            <div class="xxx">
+              <div class="placeholder">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend" *ngIf="locale== 'en'">
+                    <div class="input-group-text">+{{countryCode}}</div>
+                  </div>
+                  <input type="text"
+                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                    [ngClass]="{ 'is-invalid':submitted && msisdn.invalid }" #msisdn="ngModel" name="msisdn"
+                    [maxlength]="operatorRes?.urlModel?.msisdnLength" [minlength]="operatorRes?.urlModel?.msisdnLength"
+                    [(ngModel)]="registermsisdn" class="form-control" autocomplete="off" id="inlineFormInputGroup"
+                    placeholder="{{'placeholder.mobile' | translate}}" aria-describedby="basic-addon1" required>
+                  <div class="input-group-prepend" *ngIf="locale== 'ar'">
+                    <div class="input-group-text">{{countryCode}}+</div>
+                  </div>
+                  <div *ngIf="submitted && msisdn.invalid" class="invalid-feedback d-block error">
+                    <div *ngIf="msisdn.errors?.required">{{'header.mobreq' | translate}}</div>
+                    <div *ngIf="msisdn.errors?.maxlength">{{'header.lengthErr' | translate}}.</div>
+                    <div *ngIf="msisdn.errors?.minlength">{{'header.num.length' | translate}}.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="text-danger" style="display:none">{{'header.invalidnum' | translate}}</p>
+          <p>{{'header.plan' | translate}}</p>
+          <div class="form-group btn_pack_price">
+            <button type="button" id="{{op.id}}"
+              [ngClass]="{'btn-success' :   this.operatorId  == op.id ,'btn-default':  this.operatorId  != op.id } "
+              *ngFor="let op of operatorResProd?.operatorList" class="btn btn-default packClass"
+              (click)="getOp($event,op)">
+              {{op.operator}}</button>
+          </div>
+          <div class="form-group btn_pack_price">
+
+            <button type="button" id="{{op.id}}"
+              [ngClass]="{'btn-success' :  this.pinreq.productId == op.id ,'btn-default':this.pinreq.productId != op.id } "
+              *ngFor="let op of  this.ProductList " class="btn btn-default packClass" (click)="pass($event,op)">
+              {{op.pricePoint}} {{op.currency}}/{{op.packType}} </button>
+          </div>
+
+          <!-- <div class="form-group btn_pack_price">
+            <p id="{{op.id}}" class="text-white packClass" *ngFor="let op of ProductList?.productList"
+              (click)="pass($event,op)">
+              {{op.pricePoint}} {{op.currency}} / {{op.packType}} </p>
+          </div> -->
+          <div class="form-group">
+            <button type="submit" class="btn btn-success round_btn"> {{'header.register' | translate}} </button>
+          </div>
+        </form>
+        <form #otpForm="ngForm" (ngSubmit)="Otpsubmit(otpForm,'sub')" *ngIf="otpbool==1">
+          <div class="form-group">
+            <h3 class="t1">{{'header.ultimate' | translate }}</h3>
+            <h4 class="t2">{{'unlockText' | translate}}</h4>
+            <p>{{'header.sentto' | translate}} <br>
+              +{{countryCode}} {{registermsisdn}}</p>
+            <div class="xxx password-icon col-md-10 mr-auto">
+              <div class="row">
+                <div class="col-md-8 col-9 mr-auto">
+                  <input [type]="cuteye ? 'text' : 'password'"
+                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                    accept="^\d{10}$" [minlength]="operatorRes?.urlModel.pinLength"
+                    [maxlength]="operatorRes?.urlModel.pinLength" class="otpStyle w-100" autocomplete="off"
+                    id="txtPassword" name="otp" #otp="ngModel" [(ngModel)]="otpvalue" required />
+                </div>
+                <div class="col-md-4 col-3 resend"> <span id="toggle_pwd"> <i *ngIf="this.cuteye"
+                      class="fa fa-fw fa-eye field_icon cursor" (click)="eyeresolver()"></i> <i *ngIf="!this.cuteye"
+                      class="fa fa-fw fa-eye-slash field_icon cursor" (click)="eyeresolver()"></i></span> <br>
+                  <a *ngIf="subresend ==true" class="resend_code" (click)="resend('sub')">{{'header.resend' |
+                    translate}} </a>
+                  <countdown *ngIf="subresend ==false" #countdown [config]="{ leftTime: 45 }"
+                    (finished)="finishTimer()"> $!m!:$!s!
+                  </countdown>
+                </div>
+              </div>
+              <div class="text-danger" *ngIf="otp.invalid &&  otpForm.submitted">{{'header.wrongotp1' | translate}}
+              </div>
+            </div>
+          </div>
+          <div class="form-group"><br>
+            <button type="submit" class="btn btn-success round_btn">{{'header.loginver' | translate}}</button>
+          </div>
+        </form>
+        <form *ngIf="otpbool==2">
+          <div class="form-group">
+            <h3 class="t1"><span class="falling-star"><img src="assets/images/falling-star.png" alt=""></span>
+              {{'header.congo' | translate}}</h3>
+            <h4 class="t2">{{'header.catunlock' |translate}}<br>
+              +<br>
+              {{'header.joinreward' | translate}}</h4>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-success round_btn" (click)="StartQuiz()"> {{'header.startquiz'
+              |translate}}
+            </button>
+          </div>
+          <br>
+          <br>
+          <br>
+          <br>
+        </form>
+      </div>
+    </div>
+  </div>
+</jw-modal>
+<!-- Login Modal -->
+<jw-modal id="loginmodal" *ngIf="loginResponse.statusDescription.statusCode!=200">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close">
+          <img (click)="closelogin()" class="cursor" src="assets/images/close.png" alt="">
+        </button>
+        <h4 class="modal-title" id="exampleModalLabel2"><span><img src="assets/images/popup-img1.png"
+              alt="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><img src="assets/images/logo.png"
+            class="quitz_to_play" alt=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img
+              src="assets/images/popup-img2.png" alt=""></span></h4>
+      </div>
+      <div class="modal-body">
+        <form #loginForm="ngForm" (ngSubmit)="login(loginForm)" *ngIf="loginbool==0">
+          <div class="form-group">
+            <h3 class="t1">{{'header.ultimate' | translate }}</h3>
+            <h4 class="t2">{{'unlockText' | translate}}</h4>
+            <div class="xxx">
+              <div class="placeholder">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend"> <span class="input-group-text"
+                      *ngIf="locale== 'en'">+{{countryCode}}
+                    </span>
+                    <input type="text" id="mobile_id" class=" text_box_style logbor mobile"
+                      oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                      placeholder="{{'placeholder.mobile' | translate}}" name="msisdn" #msisdn="ngModel"
+                      [maxlength]="operatorRes?.urlModel?.msisdnLength"
+                      [minlength]="operatorRes?.urlModel?.msisdnLength" accept="^\d{10}$" [(ngModel)]="loginMsisdn"
+                      required autocomplete="off" />
+                    <div class="input-group-prepend" *ngIf="locale== 'ar'">
+                      <div class="input-group-text">{{countryCode}}+</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="loginSubmit && msisdn.invalid" class="invalid-feedback d-block error">
+                <div *ngIf="msisdn.errors?.required">{{'header.mobreq' | translate}}</div>
+                <div *ngIf="msisdn.errors?.maxlength">{{'header.lengthErr' | translate}}.</div>
+                <div *ngIf="msisdn.errors?.minlength">{{'header.num.length' | translate}}.</div>
+              </div>
+
+
+              <div class="form-group btn_pack_price" *ngIf="checkSubsRes.statusDescription.statusCode  == 205">
+                <button type="button" id="{{op.id}}"
+                  [ngClass]="{'btn-success' :   this.operatorId  == op.id ,'btn-default':  this.operatorId  != op.id } "
+                  *ngFor="let op of operatorResProd?.operatorList" class="btn btn-default packClass"
+                  (click)="getloginOp($event,op)">
+                  {{op.operator}}</button>
+              </div>
+              <div class="form-group btn_pack_price" *ngIf="checkSubsRes.statusDescription.statusCode  == 205">
+
+                <button type="button" id="{{op.id}}"
+                  [ngClass]="{'btn-success ':this.loginProd == op.id,'btn-default':this.loginProd != op.id  }"
+                  *ngFor="let op of ProductList" class="btn btn-default" (click)="loginProduct(op)">
+                  {{op.pricePoint}} {{op.currency}}/{{op.packType}} </button>
+              </div>
+
+              <!-- <div class="form-group" *ngIf="checkSubsRes.statusDescription.statusCode  == 205">
+                <p id="{{op.id}}" *ngFor="let op of ProductList?.productList" (click)="loginProduct(op)">
+                  {{op.pricePoint}} {{op.currency}}/{{op.packType}} </p>
+
+              </div> -->
+            </div>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-success round_btn"> {{'header.login' | translate}} </button>
+          </div>
+        </form>
+        <form #otpForm="ngForm" (ngSubmit)="Otpsubmit(otpForm,'login')" *ngIf="loginbool==1">
+          <div class="form-group">
+            <h3 class="t1">{{'header.ultimate' | translate }}</h3>
+            <h4 class="t2">{{'unlockText' | translate}}</h4>
+            <p>{{'header.sentto' | translate}} <br>
+              +{{countryCode}} {{loginMsisdn}}</p>
+            <div class="xxx password-icon col-md-10 mr-auto">
+              <div class="row">
+                <div class="col-md-8 col-9 mr-auto">
+                  <input [type]="cuteye ? 'number' : 'password'"
+                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                    [minlength]="operatorRes?.urlModel.pinLength" [maxlength]="operatorRes?.urlModel.pinLength"
+                    autocomplete="off" id="txtPassword" name="otp" class="otpStyle" #otp="ngModel"
+                    [(ngModel)]="otpvalue" required />
+                </div>
+                <div class="col-md-4 col-3  resend"> <span id="toggle_pwd"> <i *ngIf="this.cuteye"
+                      class="fa fa-fw fa-eye field_icon cursor" (click)="eyeresolver()"></i> <i *ngIf="!this.cuteye"
+                      class="fa fa-fw fa-eye-slash field_icon cursor" (click)="eyeresolver()"></i></span> <br>
+                  <a class=" resend_code " *ngIf="loginresend ==true" (click)="resend('login')">{{'header.resend' |
+                    translate}} ></a>
+                  <countdown *ngIf="loginresend==false" #countdown [config]="{ leftTime: 45 }"
+                    (finished)="finishLoginTimer()"> $!m!:$!s!
+                  </countdown>
+                </div>
+              </div>
+            </div>
+            <div class="text-danger" *ngIf="otp.invalid &&  otpForm.submitted">{{'header.wrongotp1' |translate}}</div>
+            <div class="form-group"><br>
+              <button type="submit" class="btn btn-success round_btn">{{'header.loginver' | translate }}</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</jw-modal>
+<jw-modal id="profile" *ngIf="this.profile !=null"
+  [ngClass]="{'modal_open':profile_open , 'modal_close':!profile_open}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <img class="cursor"
+            (click)="closeProfile()" src="assets/images/close.png" alt="">
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #updateform="ngForm" (ngSubmit)="updateProfile(updateform)">
+          <div class="form-group">
+            <div class="row profile-img-sec">
+              <div class="col-md-5 profile-img-wrap">
+                <div class="profile-img"> <img id="expandedImg" style="width:100%; margin:auto;" src="{{profileImage}}">
+                  <span class="profile-caption">{{'header.2cateunlock' | translate}}
+                  </span>
+                  <div class="progress">
+                    <div class="progress_inner"></div>
+                  </div>
+                  <div class="opt"> </div>
+                </div>
+              </div>
+              <div class="col-md-7">
+                <div class="profile-text">
+                  <div class="row mrl-none border-1">
+                    <div class="col-md-1 col-2"><img src="assets/images/name.png" alt=""></div>
+                    <div class="col-md-3 col-4">{{'header.name' | translate}} <span>:</span></div>
+                    <div class="col-md-6 col-4">
+                      <span *ngIf="isVisible(!showName)"> {{this.Name}}</span>
+                      <input *ngIf="isVisible(showName)" class="profile_edit_font" autocomplete="off"
+                        class="form-control bg-transparent text-white p-0 h-auto border-0" name="name" #name="ngModel"
+                        ngModel required maxlength="30" type="text " placeholder="{{'placeholder.name' | translate}}"
+                        [(ngModel)]="this.Name" />
+                    </div>
+                    <div class="col-md-2 col-2 cursor"><a><img *ngIf="isVisible(!showName)"
+                          src="assets/images/pencil.png" alt="" (click)="Nameinput()"></a>
+                    </div>
+                  </div>
+                  <div class="row mrl-none">
+                    <div class="col-md-1 col-2"><img src="assets/images/gender.png" alt=""></div>
+                    <div class="col-md-3 col-4">{{'header.gender' | translate}} <span>:</span></div>
+                    <div class="col-md-6 col-4">{{this.gender}}</div>
+                    <div class="col-md-2 col-2">&nbsp;</div>
+                  </div>
+                  <div class="row mrl-none">
+                    <div class="col-md-1 col-2"><img src="assets/images/age.png" alt=""></div>
+                    <div class="col-md-3 col-4">{{'header.age' | translate}} <span>:</span></div>
+                    <div class="col-md-6 col-4"> <span *ngIf="isVisible(!showAge)">{{this.Age}}</span>
+                      <input type="text " accept="^\d{10}$" class="profile_edit_font" autocomplete="off"
+                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                        *ngIf="isVisible(showAge)" #age="ngModel" name="age" required maxlength="3"
+                        class="form-control bg-transparent text-white p-0 h-auto border-0"
+                        placeholder="{{'placeholder.age' | translate}} " [(ngModel)]="this.Age" />
+                    </div>
+                    <div class="col-md-2 col-2 cursor"><a href="#"><img *ngIf="isVisible(!showAge)"
+                          src="assets/images/pencil.png" alt="" (click)="AgeInput()"></a></div>
+                  </div>
+                  <div class="row mrl-none">
+                    <div class="col-md-1 col-2"><img src="assets/images/country.png" alt=""></div>
+                    <div class="col-md-3 col-4">{{'header.country' | translate}} <span>:</span></div>
+                    <div class="col-md-6 col-4">{{this.profile.country}}</div>
+                    <div class="col-md-2 col-2">&nbsp;</div>
+                  </div>
+                  <div class="row mrl-none">
+                    <div class="col-md-1 col-2"><img src="assets/images/coins.png" alt=""></div>
+                    <div class="col-md-3 col-4">{{'header.coins' | translate}} <span>:</span></div>
+                    <div class="col-md-6 col-4">{{this.dataShare.coins}}</div>
+                    <div class="col-md-2 col-2">&nbsp;</div>
+                  </div>
+                  <div class="row mrl-none">
+                    <div class="col-md-1 col-2"><img src="assets/images/live.png" alt=""></div>
+                    <div class="col-md-3 col-4">{{'header.lives' | translate}}<span>:</span></div>
+                    <div class="col-md-6 col-4">{{this.dataShare.lives}}</div>
+                    <div class="col-md-2 col-2">&nbsp;</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row"><span class="t2 center-top">{{'header.PSelect' | translate}}</span></div>
+            <div class="profile-pic row" style="position: relative;">
+              <div class="col-md-3 col-3" *ngFor="let op of  this.dataShare.imageRes.userProfileImageList">
+                <div class="column"><img src="{{op.profileImageUrl}}" class="cursor" alt="Nature" style="width:100%"
+                    (click)="image(op)"></div>
+              </div>
+              <div class="profile_continue_btn">
+                <button type="submit" class="btn btn-primary btn-success round_btn"
+                  style="margin-left:15px">{{'Continue' | translate}}</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</jw-modal>
+<!-- Unsubscription Modal-->
+<jw-modal id="unsub" *ngIf="loginResponse.statusDescription.statusCode==200">
+  <div class="modal-dialog" role="document" *ngIf="loginResponse.statusDescription.statusCode==200">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close">
+          <img (click)="closeModal('unsub')" class="cursor" src="assets/images/close.png" alt="">
+        </button>
+        <h4 class="modal-title" id="exampleModalLabel2"><span><img src="assets/images/popup-img1.png"
+              alt="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><img class="quitz_to_play"
+            src="assets/images/logo.png" alt=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img
+              src="assets/images/popup-img2.png" alt=""></span></h4>
+      </div>
+      <form #unsubForm="ngForm" (ngSubmit)="unsub()">
+        <div class="modal-body">
+          <div class="form-group py-1">
+            <h4 class="mo_heading mb-2">{{'header.unsubMsg' | translate}}</h4>
+          </div>
+        </div>
+        <div class="modal-footer footer-center">
+          <button type="submit" class="btn btn-success round_btn"> {{'header.unsub' | translate}}</button>
+          <button type="button" class="btn btn-warning round_btn " (click)="closeModal('unsub')"> {{'Cancel' |
+            translate}} </button>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</jw-modal>
+<!-- logout Modal -->
+<jw-modal id="logout" *ngIf="loginResponse.statusDescription.statusCode==200">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close">
+          <img (click)="closeModal('logout')" class="cursor" src="assets/images/close.png" alt="">
+        </button>
+        <h4 class="modal-title" id="exampleModalLabel2"><span><img src="assets/images/popup-img1.png"
+              alt="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><img class="quitz_to_play"
+            src="assets/images/logo.png" alt=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img
+              src="assets/images/popup-img2.png" alt=""></span></h4>
+      </div>
+      <form #logoutForm="ngForm" (ngSubmit)="logout()">
+        <div class="modal-body">
+          <div class="form-group py-2">
+            <h4 class=" mo_heading">{{'LogoutMessage' | translate}}</h4>
+          </div>
+        </div>
+        <div class="modal-footer pb-0 border-0 footer-center">
+          <button type="submit" class="btn btn-success round_btn"> {{'Logout' | translate}} </button>
+          <button type="button" class="btn btn-warning round_btn" (click)="closeModal('logout')"> {{'Cancel' |
+            translate}} </button>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</jw-modal>
+<!--Start Quiz Modal-->
+<jw-modal id="startquiz" [ngClass]="{'modal_open':Modal_open , 'modal_close':!Modal_open}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="assets/images/close.png"
+            (click)="closeModal('startquiz')" alt=""></button>
+        <h4 class="modal-title" id="exampleModalLabel2"><span><img src="assets/images/popup-img1.png"
+              alt="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><img class="quitz_to_play"
+            src="assets/images/logo.png" alt=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img
+              src="assets/images/popup-img2.png" alt=""></span></h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <h3 class="t1"><span class="falling-star"><img src="assets/images/falling-star.png" alt=""></span>
+              {{'header.congo' | translate}}</h3>
+            <h4 class="t2">{{'header.catunlock' |translate}}<br>
+              +<br>
+              {{'header.joinreward' |translate}}</h4>
+          </div>
+          <div class="text-center">
+            <img src="assets/images/gift.png" alt="">
+          </div>
+          <br>
+          <div class="form-group">
+            <button type="button" class="btn btn-success round_btn" (click)="StartQuiz()"> {{'header.startquiz' |
+              translate}}</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</jw-modal>

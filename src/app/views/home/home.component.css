@@ -1,0 +1,111 @@
+::ng-deep .resend {
+    margin-left: 35rem;
+}
+::ng-deep input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+::ng-deep  .column img:hover {
+opacity: 1;
+}
+
+
+/* Expanding image text */
+#imgtext {
+position: absolute;
+bottom: 15px;
+left: 15px;
+color: white;
+font-size: 20px;
+}
+
+/* Closable button inside the expanded image */
+::ng-deep  .closebtn {
+position: absolute;
+top: 10px;
+right: 15px;
+color: white;
+font-size: 35px;
+cursor: pointer;
+}
+::ng-deep .placeholder {
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  margin-top: 10px;
+}
+::ng-deep  .profile-pic ul {
+  overflow-y: scroll;
+  height: 280px;
+  overflow-x: hidden;
+list-style:none;
+margin:0;
+padding:0;
+}
+::ng-deep .btn-default {
+  background-color: #fff;
+}
+::ng-deep .overlay {
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 6px;
+}
+::ng-deep #block_container {
+  display: flex;
+  justify-content: center;
+}
+::ng-deep .cursor{
+  cursor: pointer;
+}
+::ng-deep .column {
+  float: left;
+  width: 92%;
+  padding: 5px;
+  background: #fff;
+  margin: 5px;
+  border: solid 2px #13daf5;
+}
+::ng-deep .logbor{
+border-radius: 0px 5px  5px 0px !important ;
+}
+.lock {
+  width: 30px;
+  height: 40px;
+  float: right;
+  position: relative;
+  right: 0;
+  top: 1px;
+}
+/* top -60px*/
+
+.cursor{
+  cursor:pointer
+}
+.loader_class {
+  width: auto;
+}
+.below_text .lock img {
+  margin-right: 0;
+  margin-top: -19px;
+}
+
+
+.arabic_mani{
+text-align: right;
+    direction: rtl;
+}
+
+@media(max-width:667px){
+  .cursor span{
+    font-size: large !important;
+  }
+}

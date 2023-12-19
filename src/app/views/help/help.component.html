@@ -1,0 +1,31 @@
+<div class="gray-bg gray_bg">
+  <div class="container">
+    <ul class="nav nav-tabs nav_tabs ul_nav tabs" id="myTab" role="tablist" *ngIf="locale == 'en'">
+      <li class="nav-item cursor" *ngFor="let help of arr " [ngClass]="{'active':this.itemId == help.item_text}"> <a
+          class="nav-link pd-none cursor" data-toggle="tab" (click)="pass(help)">{{help.item_text}}</a> </li>
+
+    </ul>
+    <ul class="nav nav-tabs nav_tabs ul_nav tabs" id="myTab" role="tablist" *ngIf="locale == 'ar'">
+      <li class="nav-item cursor" *ngFor="let help of arr " [ngClass]="{'active':this.itemId == help.item_text}"> <a
+          class="nav-link pd-none cursor" data-toggle="tab" (click)="pass(help)">{{help.item_textar}}</a> </li>
+
+    </ul>
+    <ul class="nav nav-tabs nav_tabs ul_nav tabs" id="myTab" role="tablist" *ngIf="locale == 'fr'">
+      <li class="nav-item cursor" *ngFor="let help of arr " [ngClass]="{'active':this.itemId == help.item_text}"> <a
+          class="nav-link pd-none cursor" data-toggle="tab" (click)="pass(help)">{{help.item_textFr}}</a> </li>
+
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="one" role="tabpanel" aria-labelledby="one-tab">
+        <div class="row">
+          <div class="col-md-8">
+            <ul [ngClass]="{'arabic_mani':locale=='ar'}">
+              <li *ngFor="let helpDes of HtpResponse?.helpList[0].helpDescriptionModel">{{helpDes.desc}}</li>
+            </ul>
+          </div>
+          <div class="col-md-4"><img src="{{image}}" alt=""></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

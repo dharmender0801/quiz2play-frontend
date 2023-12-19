@@ -1,0 +1,100 @@
+.buy-coins-box{
+    width: 100%;
+    background-color:#002060;
+    border:2px #ffc000 solid;
+    border-radius:30px;
+    display:inline-block;
+    position:relative;
+    font-size:15px;
+    margin-bottom: 46px;
+    }
+    .buy-coins-box .btn {
+        min-width: 95px;
+        padding: 3px 6px;
+    }
+
+    #formCont{
+        border-radius: 10px 10px 10px 10px !important;
+       
+        padding: 30px !important;
+        width: 100% !important ;
+     
+        position: relative !important ;
+        padding: 0px !important;
+  
+        text-align: center !important;
+    }
+    
+    .coin-content {
+        margin-top: 40px;
+    }
+.coin-content img {
+    width: 30%;
+}
+.sale {
+    position: absolute;
+    left: -15px;
+    top: -10px;
+}
+.footer-center{
+    justify-content: center;
+  }
+  .modal-footer .btn {
+    margin-right:10px;
+  }
+
+
+  .imageClass img{
+   width:auto !important
+  }
+
+
+  .gray-bg h6 {
+    padding-top:0% !important;
+    padding-bottom: 15px !important;
+}
+
+@media(max-width:1200px){
+    .buy-coins-box{
+        display: block !important;
+        padding: 11px !important;
+    }
+    .sale{
+        display: block !important;
+    }
+    .sale img{
+        width: 99px !important;
+        display: block !important;
+    }
+    .coin-content{
+        position: static !important;
+        margin-top: 46px !important;
+    }
+    .coin-content p{
+        margin-bottom: 0.5rem !important;
+    }
+    .coin-content span{
+        display: block !important;
+        text-overflow: ellipsis !important;
+        overflow: hidden !important;
+        white-space: nowrap !important;
+    }
+    .imageClass img{
+        width: 82% !important;
+    }
+}
+@media(max-width:667px){
+.coin-content.imageClass img {
+    width: auto !important;
+}
+#buycoins .round_btn{
+    margin: 5px !important;
+    font-size: 18px !important;
+    padding: 4px 20px !important;
+}
+#buycoins .mo_heading{
+    margin: 0 !important;
+    font-size: 21px !important;
+}
+
+}

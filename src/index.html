@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Quiz2play</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="ScreenOrientation" content="autoRotate:disabled">
+  <link rel="icon" type="image/x-icon" href="/assets/images/fev1.ico">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <meta http-equiv='cache-control' content='no-cache'>
+  <meta http-equiv='expires' content='0'>
+  <meta http-equiv='pragma' content='no-cache'>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
+  <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+    integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+  <style>
+    .rtl {
+      direction: rtl !important;
+    }
+
+    .ltr {
+      direction: ltr !important;
+    }
+  </style>
+
+</head>
+
+
+<body oncontextmenu="return false;" id="body">
+  <app-root></app-root>
+
+</body>
+<script>
+  if (localStorage.getItem('locale') == null) {
+    localStorage.setItem('locale', 'en')
+  }
+
+  if (localStorage.getItem('locale') == 'en') {
+    $('#body').removeClass('rtl');
+
+    $("div [class*='col-']").removeClass('pull-right');
+    $("a.pull-right").addClass('pull-right');
+    $("a.btn.btn-primary").removeClass('pull-left');
+
+  } else if (localStorage.getItem('locale') == 'fr') {
+    $('#body').removeClass('rtl');
+
+    $("div [class*='col-']").removeClass('pull-right');
+    $("a.pull-right").addClass('pull-right');
+    $("a.btn.btn-primary").removeClass('pull-left');
+
+  }
+  else if (localStorage.getItem('locale') == 'ar') {
+    $('#body').removeClass('ltr');
+    $('#body').addClass('rtl');
+    $("div [class*='col-']").addClass('pull-right');
+    $("a.pull-right").removeClass('pull-right');
+    $("a.btn.btn-primary").addClass('pull-left');
+  }
+</script>
+
+</html>

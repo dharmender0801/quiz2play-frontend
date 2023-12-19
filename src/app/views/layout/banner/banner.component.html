@@ -1,0 +1,36 @@
+<div class="container-fluid h294">
+  <div class="container">
+    <app-bar-comp [Star]="starShow"></app-bar-comp>
+    <div>
+      <owl-carousel-o [options]="customOptions" [ngClass]="{'direction':locale=='ar'}">
+        <ng-container *ngFor="let slide of bannerres.bannerList">
+          <ng-template carouselSlide [id]="slide.id">
+            <div class="caption">
+              <h1>{{slide.title1}}<br>
+                {{slide.title2}}</h1>
+              <p>{{slide.title3}}</p>
+            </div>
+            <img [src]="slide.bannerUrl">
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
+      <div class="play-btn text-center " *ngIf="locale=='en'">
+        <a (click)="openModal()"><img src="assets/images/play-now.png" class="cursor" alt=""></a>
+      </div>
+      <div class="play-btn text-center " *ngIf="locale=='ar'">
+        <a (click)="openModal()"><img src="assets/images/play-now_arabic.png" class="cursor" alt=""></a>
+      </div>
+
+      <div class="play-btn text-center " v *ngIf="locale=='fr'">
+        <a (click)="openModal()"><img src="assets/images/play-now_french.png" class="cursor" alt=""></a>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+
+
+</div>
